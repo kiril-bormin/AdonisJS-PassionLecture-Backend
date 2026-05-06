@@ -17,7 +17,7 @@ export default class Category extends BaseModel {
   declare updatedAt: DateTime
 
   @hasMany(() => Book, {
-    foreignKey: 'category_id',
+    foreignKey: 'categoryId',
   })
   declare books: HasMany<typeof Book>
 }

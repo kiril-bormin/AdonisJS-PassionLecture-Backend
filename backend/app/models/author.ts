@@ -7,11 +7,11 @@ export default class Author extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
-  @column()
-  declare firstname: string
+  @column({ columnName: 'firstname' })
+  declare firstName: string
 
-  @column()
-  declare lastname: string
+  @column({ columnName: 'lastname' })
+  declare lastName: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -20,7 +20,7 @@ export default class Author extends BaseModel {
   declare updatedAt: DateTime
 
   @hasMany(() => Book, {
-    foreignKey: 'author_id',
+    foreignKey: 'authorId',
   })
   declare books: HasMany<typeof Book>
 }

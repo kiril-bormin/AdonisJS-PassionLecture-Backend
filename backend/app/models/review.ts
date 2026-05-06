@@ -14,6 +14,12 @@ export default class Review extends BaseModel {
   @column()
   declare comment: string
 
+  @column({ columnName: 'user_id' })
+  declare userId: number
+
+  @column({ columnName: 'book_id' })
+  declare bookId: number
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
@@ -21,12 +27,12 @@ export default class Review extends BaseModel {
   declare updatedAt: DateTime
 
   @belongsTo(() => User, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
   })
   declare user: BelongsTo<typeof User>
 
   @belongsTo(() => Book, {
-    foreignKey: 'book_id',
+    foreignKey: 'bookId',
   })
   declare book: BelongsTo<typeof Book>
 }

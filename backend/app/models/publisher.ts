@@ -17,7 +17,7 @@ export default class Publisher extends BaseModel {
   declare updatedAt: DateTime
 
   @hasMany(() => Book, {
-    foreignKey: 'publisher_id',
+    foreignKey: 'publisherId',
   })
   declare books: HasMany<typeof Book>
 }

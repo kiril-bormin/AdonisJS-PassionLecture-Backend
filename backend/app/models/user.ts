@@ -36,12 +36,12 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare updatedAt: DateTime | null
 
   @hasMany(() => Review, {
-    foreignKey: 'user_id',
+    foreignKey: 'userId',
   })
   declare reviews: HasMany<typeof Review>
 
   @hasMany(() => Book, {
-    foreignKey: 'book_id',
+    foreignKey: 'userId',
   })
   declare books: HasMany<typeof Book>
 
