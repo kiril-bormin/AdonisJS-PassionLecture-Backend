@@ -1,7 +1,8 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
 import Book from './book.js'
-import type { HasMany } from '@adonisjs/lucid/types/relations'
+import User from './user.js'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 
 export default class Category extends BaseModel {
   @column({ isPrimary: true })
@@ -9,6 +10,9 @@ export default class Category extends BaseModel {
 
   @column()
   declare label: string
+
+  @column({ columnName: 'created_by_user_id' })
+  declare createdByUserId: number
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -20,4 +24,9 @@ export default class Category extends BaseModel {
     foreignKey: 'categoryId',
   })
   declare books: HasMany<typeof Book>
+
+  @belongsTo(() => User, {
+    foreignKey: 'createdByUserId',
+  })
+  declare createdByUser: BelongsTo<typeof User>
 }

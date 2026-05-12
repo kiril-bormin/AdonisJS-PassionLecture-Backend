@@ -7,6 +7,9 @@ import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import Review from './review.js'
 import type { HasMany } from '@adonisjs/lucid/types/relations'
 import Book from './book.js'
+import Author from './author.js'
+import Category from './category.js'
+import Publisher from './publisher.js'
 
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
@@ -44,6 +47,21 @@ export default class User extends compose(BaseModel, AuthFinder) {
     foreignKey: 'userId',
   })
   declare books: HasMany<typeof Book>
+
+  @hasMany(() => Author, {
+    foreignKey: 'createdByUserId',
+  })
+  declare createdAuthors: HasMany<typeof Author>
+
+  @hasMany(() => Category, {
+    foreignKey: 'createdByUserId',
+  })
+  declare createdCategories: HasMany<typeof Category>
+
+  @hasMany(() => Publisher, {
+    foreignKey: 'createdByUserId',
+  })
+  declare createdPublishers: HasMany<typeof Publisher>
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 }

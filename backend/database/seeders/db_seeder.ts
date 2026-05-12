@@ -15,9 +15,9 @@ export default class extends BaseSeeder {
     const users = await UserFactory.createMany(5)
     const allUsers = [admin, ...users]
 
-    const authors = await AuthorFactory.createMany(10)
-    const categories = await CategoryFactory.createMany(5)
-    const publishers = await PublisherFactory.createMany(5)
+    const authors = await AuthorFactory.merge({ createdByUserId: admin.id }).createMany(10)
+    const categories = await CategoryFactory.merge({ createdByUserId: admin.id }).createMany(5)
+    const publishers = await PublisherFactory.merge({ createdByUserId: admin.id }).createMany(5)
 
     for (let i = 0; i < 30; i++) {
       const user = allUsers[Math.floor(Math.random() * allUsers.length)]
