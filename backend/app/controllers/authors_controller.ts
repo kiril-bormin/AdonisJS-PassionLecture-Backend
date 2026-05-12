@@ -7,7 +7,10 @@ export default class AuthorsController {
     const page = request.input('page', 1)
     const limit = request.input('limit', 20)
 
-    const query = Author.query()
+    const query = Author.query().preload('createdByUser', (userQuery) => {
+      // createdByUser => nom de la relation dans le modèle, puis avec userQuery on fait la requête dans la db
+      userQuery.select(['id', 'pseudo']) // preload uniquement l'id et le pseudo de user
+    })
 
     if (q) {
       query.where((builder) => {
@@ -21,7 +24,11 @@ export default class AuthorsController {
   }
 
   async show({ params }: HttpContext) {
-    return Author.query().where('id', params.id)
+    return Author.query()
+      .where('id', params.id)
+      .preload('createdByUser', (userQuery) => {
+        userQuery.select(['id', 'pseudo'])
+      })
   }
 
   async store({ request, auth, response }: HttpContext) {
