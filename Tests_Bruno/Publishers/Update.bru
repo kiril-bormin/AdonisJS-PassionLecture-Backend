@@ -1,0 +1,19 @@
+meta {
+  name: Publishers_Update
+  type: http
+  seq: 43
+}
+
+put {
+  url: {{baseUrl}}/publishers/{{publisherId}}
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  "name": "Gallimard (updated)"
+}
+

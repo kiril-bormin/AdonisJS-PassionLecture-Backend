@@ -1,0 +1,14 @@
+meta {
+  name: Users_Delete
+  type: http
+  seq: 73
+}
+
+delete {
+  url: {{baseUrl}}/users/{{userId}}
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+}
+

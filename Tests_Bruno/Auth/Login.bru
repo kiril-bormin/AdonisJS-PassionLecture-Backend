@@ -1,0 +1,20 @@
+meta {
+  name: Auth_Login
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/auth/login
+  body: none
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  "email": "bruno_user@example.com",
+  "password": "Password123!"
+}

@@ -1,0 +1,20 @@
+meta {
+  name: Authors_Create
+  type: http
+  seq: 32
+}
+
+post {
+  url: {{baseUrl}}/authors
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  "firstName": "Jules",
+  "lastName": "Verne"
+}
+

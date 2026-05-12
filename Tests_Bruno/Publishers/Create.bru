@@ -1,0 +1,19 @@
+meta {
+  name: Publishers_Create
+  type: http
+  seq: 42
+}
+
+post {
+  url: {{baseUrl}}/publishers
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  "name": "Gallimard"
+}
+

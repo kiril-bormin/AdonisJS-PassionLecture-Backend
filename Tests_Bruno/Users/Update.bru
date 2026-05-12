@@ -1,0 +1,19 @@
+meta {
+  name: Users_Update
+  type: http
+  seq: 72
+}
+
+put {
+  url: {{baseUrl}}/users/{{userId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  "username": "bruno_user_updated"
+}
+

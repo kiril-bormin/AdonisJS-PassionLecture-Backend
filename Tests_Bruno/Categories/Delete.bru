@@ -1,0 +1,14 @@
+meta {
+  name: Categories_Delete
+  type: http
+  seq: 24
+}
+
+delete {
+  url: {{baseUrl}}/categories/{{categoryId}}
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+}
+

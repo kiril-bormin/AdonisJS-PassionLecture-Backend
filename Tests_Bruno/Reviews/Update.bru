@@ -1,0 +1,20 @@
+meta {
+  name: Reviews_Update
+  type: http
+  seq: 62
+}
+
+put {
+  url: {{baseUrl}}/reviews/{{reviewId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  "rating": 4,
+  "comment": "Après relecture, note ajustée."
+}
+

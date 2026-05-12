@@ -1,0 +1,14 @@
+meta {
+  name: Users_List
+  type: http
+  seq: 70
+}
+
+get {
+  url: {{baseUrl}}/users
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+}
+

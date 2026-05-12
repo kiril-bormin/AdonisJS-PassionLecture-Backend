@@ -1,0 +1,19 @@
+meta {
+  name: Categories_Create
+  type: http
+  seq: 22
+}
+
+post {
+  url: {{baseUrl}}/categories
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  "name": "Science-fiction"
+}
+

@@ -1,0 +1,14 @@
+meta {
+  name: Publishers_Delete
+  type: http
+  seq: 44
+}
+
+delete {
+  url: {{baseUrl}}/publishers/{{publisherId}}
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+}
+

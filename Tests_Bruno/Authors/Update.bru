@@ -1,0 +1,20 @@
+meta {
+  name: Authors_Update
+  type: http
+  seq: 33
+}
+
+put {
+  url: {{baseUrl}}/authors/{{authorId}}
+}
+
+headers {
+  Authorization: Bearer {{adminToken}}
+  Content-Type: application/json
+}
+
+body:json {
+  "firstName": "Jules",
+  "lastName": "Verne (updated)"
+}
+

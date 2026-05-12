@@ -1,0 +1,14 @@
+meta {
+  name: Reviews_Delete
+  type: http
+  seq: 63
+}
+
+delete {
+  url: {{baseUrl}}/reviews/{{reviewId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+

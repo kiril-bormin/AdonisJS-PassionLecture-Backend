@@ -1,0 +1,14 @@
+meta {
+  name: Books_Delete
+  type: http
+  seq: 55
+}
+
+delete {
+  url: {{baseUrl}}/books/{{bookId}}
+}
+
+headers {
+  Authorization: Bearer {{token}}
+}
+

@@ -1,0 +1,20 @@
+meta {
+  name: Reviews_Create
+  type: http
+  seq: 61
+}
+
+post {
+  url: {{baseUrl}}/books/{{bookId}}/reviews
+}
+
+headers {
+  Authorization: Bearer {{token}}
+  Content-Type: application/json
+}
+
+body:json {
+  "rating": 5,
+  "comment": "Excellent ouvrage, très inspirant."
+}
+
