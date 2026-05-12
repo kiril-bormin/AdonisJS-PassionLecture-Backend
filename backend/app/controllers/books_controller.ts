@@ -11,8 +11,6 @@ export default class BooksController {
     const page = request.input('page', 1)
     const limit = request.input('limit', 20)
 
-    console.log(limit)
-
     const query = Book.query() // préparation d'une rêquete avec des champs préchargés
       .preload('author')
       .preload('category')
