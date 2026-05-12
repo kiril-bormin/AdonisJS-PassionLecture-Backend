@@ -12,18 +12,13 @@ import { middleware } from '#start/kernel'
 import BooksController from '#controllers/books_controller'
 import AuthController from '#controllers/auth_controller'
 
-router.get('/', async () => {
-  return {
-    hello: 'world',
-  }
-})
-
 // Auth routes
 router.post('/auth/register', [AuthController, 'register'])
 router.post('/auth/login', [AuthController, 'login'])
 router.post('/auth/logout', [AuthController, 'logout']).use(middleware.auth())
 
 // Book routes
+router.get('/', [BooksController, 'index'])
 router.get('/books', [BooksController, 'index'])
 router.get('/books/:id', [BooksController, 'show'])
 router.post('/books', [BooksController, 'store']).use(middleware.auth())
