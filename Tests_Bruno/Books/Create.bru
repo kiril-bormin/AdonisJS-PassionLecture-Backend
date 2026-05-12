@@ -5,19 +5,19 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/books
+  url: http://localhost:3333/books
 }
 
 headers {
-  Authorization: Bearer {{token}}
+  Authorization: Bearer YOUR_TOKEN
   Content-Type: application/json
 }
 
 body:json {
   "title": "Voyage au centre de la Terre",
-  "categoryId": "{{categoryId}}",
-  "authorId": "{{authorId}}",
-  "publisherId": "{{publisherId}}",
+  "categoryId": 1,
+  "authorId": 1,
+  "publisherId": 1,
   "pages": 240,
   "excerptUrl": "/extraits/voyage-centre-terre.pdf",
   "summary": "Un classique de la science-fiction.",

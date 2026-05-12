@@ -5,11 +5,11 @@ meta {
 }
 
 post {
-  url: {{baseUrl}}/auth/logout
+  url: http://localhost:3333/auth/logout
   body: none
   auth: none
 }
 
 headers {
-  Authorization: Bearer {{token}}
+  Authorization: Bearer YOUR_TOKEN
 }
