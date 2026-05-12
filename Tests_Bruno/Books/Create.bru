@@ -6,6 +6,8 @@ meta {
 
 post {
   url: http://localhost:3333/books
+  body: json
+  auth: none
 }
 
 headers {
@@ -14,6 +16,7 @@ headers {
 }
 
 body:json {
+  {
   "title": "Voyage au centre de la Terre",
   "categoryId": 1,
   "authorId": 1,
@@ -23,5 +26,5 @@ body:json {
   "summary": "Un classique de la science-fiction.",
   "coverUrl": "/covers/voyage-centre-terre.jpg",
   "year": 1864
+  }
 }
-

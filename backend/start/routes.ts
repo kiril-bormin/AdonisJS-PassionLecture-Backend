@@ -17,6 +17,7 @@ router.get('/', async () => {
   }
 })
 
+// Book routes
 router.get('/books', [BooksController, 'index'])
 router.get('/books/:id', [BooksController, 'show'])
 router.post('/books', [BooksController, 'store']).use(middleware.auth())

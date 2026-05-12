@@ -4,12 +4,14 @@ import Book from '#models/book'
 export default class BooksController {
   async index({ request }: HttpContext) {
     // récupèrer les filtres de recherche
-    const q = request.input('q') //
+    const q = request.input('q') // q => pour querry, se trouve dans l'url ex: GET /books?q=aventure
     const categoryId = request.input('categoryId')
     const authorId = request.input('authorId')
     const publisherId = request.input('publisherId')
-    const page = request.input('page')
+    const page = request.input('page', 1)
     const limit = request.input('limit', 20)
+
+    console.log(limit)
 
     const query = Book.query() // préparation d'une rêquete avec des champs préchargés
       .preload('author')
@@ -57,7 +59,7 @@ export default class BooksController {
   }
 
   async store({ auth, request, response }: HttpContext) {
-    const user = await auth.authenticate() // si l'utilisateur est mal authentifié(token invalide, expiré ou absent), la méthode s'arrête
+    const user = await auth.authenticate() // si l'utilisateur est mal authentifié(token invalide, expiré ou absent), la méthode s'arrête (retourne 401 Unauthorized)
 
     const pagesCount = request.input('pagesCount', request.input('pages')) // serveur cherche "pagesCount" dans le body de la requête envoyée par l'utilisateur, si ce champ n'est pas présent,
     // il essaie de trouve un champ nommé "pages". C'est fait afin de s'assurer qu'on recevra le nombre de page peu importe comment le champ s'appelle.
