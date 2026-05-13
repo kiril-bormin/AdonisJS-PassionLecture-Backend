@@ -11,11 +11,17 @@ import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import BooksController from '#controllers/books_controller'
 import AuthController from '#controllers/auth_controller'
+import AuthorsController from '#controllers/authors_controller'
 
 // Auth routes
 router.post('/auth/register', [AuthController, 'register'])
 router.post('/auth/login', [AuthController, 'login'])
 router.post('/auth/logout', [AuthController, 'logout']).use(middleware.auth())
+
+// Author routes
+router.get('/authors', [AuthorsController, 'index'])
+router.get('/authors/:id', [AuthorsController, 'show'])
+router.post('/authors', [AuthorsController, 'store'])
 
 // Book routes
 router.get('/', [BooksController, 'index'])

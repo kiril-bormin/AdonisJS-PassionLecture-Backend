@@ -6,8 +6,8 @@ meta {
 
 post {
   url: http://localhost:3333/auth/login
-  body: none
-  auth: none
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -15,6 +15,17 @@ headers {
 }
 
 body:json {
+  {
   "email": "bruno_user@example.com",
   "password": "Password123!"
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  
+  // On descend d'un niveau pour ne prendre QUE la chaîne de caractères
+  if (data.token && data.token.token) {
+    bru.setVar("api_token", data.token.token);
+  }
 }
