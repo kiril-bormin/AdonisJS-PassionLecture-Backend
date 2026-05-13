@@ -12,6 +12,7 @@ import { middleware } from '#start/kernel'
 import BooksController from '#controllers/books_controller'
 import AuthController from '#controllers/auth_controller'
 import AuthorsController from '#controllers/authors_controller'
+import PublishersController from '#controllers/publishers_controller'
 
 // Auth routes
 router.post('/auth/register', [AuthController, 'register'])
@@ -24,6 +25,13 @@ router.get('/authors/:id', [AuthorsController, 'show'])
 router.post('/authors', [AuthorsController, 'store']).use(middleware.auth())
 router.put('/authors/:id', [AuthorsController, 'update']).use(middleware.auth())
 router.delete('/authors/:id', [AuthorsController, 'destroy']).use(middleware.auth())
+
+// Publisher routes
+router.get('/publishers', [PublishersController, 'index'])
+router.get('/publishers/:id', [PublishersController, 'show'])
+router.post('/publishers', [PublishersController, 'store']).use(middleware.auth())
+router.put('/publishers/:id', [PublishersController, 'update']).use(middleware.auth())
+router.delete('/publishers/:id', [PublishersController, 'destroy']).use(middleware.auth())
 
 // Book routes
 router.get('/', [BooksController, 'index'])
