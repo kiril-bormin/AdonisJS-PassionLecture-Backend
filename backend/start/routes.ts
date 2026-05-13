@@ -14,6 +14,8 @@ import AuthController from '#controllers/auth_controller'
 import AuthorsController from '#controllers/authors_controller'
 import PublishersController from '#controllers/publishers_controller'
 import CategoriesController from '#controllers/categories_controller'
+import ReviewsController from '#controllers/reviews_controller'
+import UsersController from '#controllers/users_controller'
 
 // Auth routes
 router.post('/auth/register', [AuthController, 'register'])
@@ -48,3 +50,21 @@ router.get('/books/:id', [BooksController, 'show'])
 router.post('/books', [BooksController, 'store']).use(middleware.auth())
 router.put('/books/:id', [BooksController, 'update']).use(middleware.auth())
 router.delete('/books/:id', [BooksController, 'destroy']).use(middleware.auth())
+
+// Review routes
+router.get('/books/:id/reviews', [ReviewsController, 'index'])
+router.post('/books/:id/reviews', [ReviewsController, 'store']).use(middleware.auth())
+router.put('/reviews/:id', [ReviewsController, 'update']).use(middleware.auth())
+router.delete('/reviews/:id', [ReviewsController, 'destroy']).use(middleware.auth())
+
+// Users routes
+router.get('/users', [UsersController, 'index']).use([middleware.auth(), middleware.admin()])
+router.get('/users/:id', [UsersController, 'show']).use([middleware.auth(), middleware.admin()])
+router.put('/users/:id', [UsersController, 'update']).use([middleware.auth(), middleware.admin()])
+router
+  .delete('/users/:id', [UsersController, 'destroy'])
+  .use([middleware.auth(), middleware.admin()])
+
+router
+  .put('/users/:id/role', [UsersController, 'updateRole'])
+  .use([middleware.auth(), middleware.admin()])

@@ -10,7 +10,7 @@ export default class AuthController {
       pseudo,
       email: request.input('email'),
       password: request.input('password'),
-      role: request.input('role', 'user'),
+      role: 'user',
     })
 
     const token = await auth.use('api').createToken(user) //
