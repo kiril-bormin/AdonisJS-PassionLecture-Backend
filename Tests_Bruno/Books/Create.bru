@@ -28,3 +28,12 @@ body:json {
   "year": 1864
   }
 }
+
+script:post-response {
+  const data = res.getBody();
+  
+  // On descend d'un niveau pour ne prendre QUE la chaîne de caractères
+  if (data.token && data.token.token) {
+    bru.setVar("api_token", data.token.token);
+  }
+}

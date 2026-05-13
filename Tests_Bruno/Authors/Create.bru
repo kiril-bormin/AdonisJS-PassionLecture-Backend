@@ -6,15 +6,17 @@ meta {
 
 post {
   url: http://localhost:3333/authors
+  body: json
+  auth: bearer
 }
 
-headers {
-  Authorization: Bearer YOUR_ADMIN_TOKEN
-  Content-Type: application/json
+auth:bearer {
+  token: {{api_token}}
 }
 
 body:json {
+  {
   "firstName": "Jules",
-  "lastName": "Verne"
+  "lastName": "Vernes"
+  }
 }
-

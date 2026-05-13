@@ -5,7 +5,9 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/authors/1
+  url: http://localhost:3333/authors/12
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,8 +15,13 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "firstName": "Jules",
-  "lastName": "Verne (updated)"
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {
+  "firstName": "Jules",
+  "lastName": "Verne (updated)"
+  }
+}

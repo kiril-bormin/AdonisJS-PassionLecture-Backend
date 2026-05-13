@@ -88,7 +88,7 @@ export default class BooksController {
 
     if (book.userId !== user.id && user.role !== 'admin') {
       // vérification si l'utilisateur est propriétaire du livre ou admin
-      return response.forbidden({ message: 'You do not have permission to edit this book.' }) // retourne l'erreur 403 forbidden (manque de permissions)
+      return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier ce livre.' }) // retourne l'erreur 403 forbidden (manque de permissions)
     }
 
     const pagesCount = request.input('pagesCount', request.input('pages'))

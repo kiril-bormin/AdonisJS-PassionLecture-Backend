@@ -1,5 +1,6 @@
 import Author from '#models/author'
 import type { HttpContext } from '@adonisjs/core/http'
+import { messages } from '@vinejs/vine/defaults'
 
 export default class AuthorsController {
   async index({ request }: HttpContext) {
@@ -44,11 +45,31 @@ export default class AuthorsController {
     return response.created(author)
   }
 
-  async update() {
-    // mettre à jour les informations d'un auteur
-  }
+  async update({ params, auth, request, response }: HttpContext) {
+    const user = await auth.authenticate()
+    const author = await Author.findOrFail(params.id) // on récupère l'autheur par son id
 
-  async destroy() {
-    // supprimer un auteur
+    if (author.createdByUserId !== user.id && user.role !== 'admin') {
+      return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier ce livre.' })
+    }
+
+    author.merge({
+      firstName: request.input('firstname', author.firstName),
+      lastName: request.input('lastname', author.lastName),
+      createdByUserId: user.id,
+    })
+    await author.save()
+    return author
+  }
+  async destroy({ auth, params, response }: HttpContext) {
+    const user = await auth.authenticate()
+    const author = await Author.findOrFail(params.id)
+
+    if (author.createdByUserId !== user.id && user.role !== 'admin') {
+      return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier ce livre.' })
+    }
+
+    await author.delete() // supprimer l'auteur
+    return response.noContent() // renvoie le code 204 ( No Content )
   }
 }

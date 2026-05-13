@@ -21,7 +21,9 @@ router.post('/auth/logout', [AuthController, 'logout']).use(middleware.auth())
 // Author routes
 router.get('/authors', [AuthorsController, 'index'])
 router.get('/authors/:id', [AuthorsController, 'show'])
-router.post('/authors', [AuthorsController, 'store'])
+router.post('/authors', [AuthorsController, 'store']).use(middleware.auth())
+router.put('/authors/:id', [AuthorsController, 'update']).use(middleware.auth())
+router.delete('/authors/:id', [AuthorsController, 'destroy']).use(middleware.auth())
 
 // Book routes
 router.get('/', [BooksController, 'index'])
