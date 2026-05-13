@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Book from '#models/book'
+import { bookValidator } from '#validators/book'
 
 export default class BooksController {
   async index({ request }: HttpContext) {
@@ -64,14 +65,17 @@ export default class BooksController {
     const editionYear = request.input('editionYear', request.input('year'))
     const extractUrl = request.input('extractUrl', request.input('excerptUrl'))
 
-    const payload = {
-      // dans payload on récupère les données du body (ainsi que les 3 variables qu'on a crée plus haut)
+    const validatedData = await bookValidator.validate({
       title: request.input('title'),
       summary: request.input('summary'),
       pagesCount,
       editionYear,
       extractUrl,
       coverUrl: request.input('coverUrl'),
+    })
+// dans payload on récupère les données du body (ainsi que les 3 variables qu'on a crée plus haut)
+    const payload = {
+      ...validatedData,
       categoryId: request.input('categoryId'),
       authorId: request.input('authorId'),
       publisherId: request.input('publisherId'),
@@ -95,14 +99,17 @@ export default class BooksController {
     const editionYear = request.input('editionYear', request.input('year'))
     const extractUrl = request.input('extractUrl', request.input('excerptUrl'))
 
-    book.merge({
-      // merger les changements
-      title: request.input('title', book.title), // deuxième valeur est la valeur par défaut
+    const validatedData = await bookValidator.validate({
+      title: request.input('title', book.title),// deuxième valeur est la valeur par défaut
       summary: request.input('summary', book.summary),
       pagesCount: pagesCount ?? book.pagesCount,
       editionYear: editionYear ?? book.editionYear,
       extractUrl: extractUrl ?? book.extractUrl,
       coverUrl: request.input('coverUrl', book.coverUrl),
+    })
+    // merger les changements
+    book.merge({
+      ...validatedData,
       categoryId: request.input('categoryId', book.categoryId),
       authorId: request.input('authorId', book.authorId),
       publisherId: request.input('publisherId', book.publisherId),
