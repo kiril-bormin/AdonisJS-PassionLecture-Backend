@@ -1,6 +1,6 @@
 import Categorie from '#models/category'
 import type { HttpContext } from '@adonisjs/core/http'
-import { messages } from '@vinejs/vine/defaults'
+import { categoryValidator } from '#validators/category'
 
 export default class CategoriesController {
   async index({ request }: HttpContext) {
@@ -35,8 +35,12 @@ export default class CategoriesController {
   async store({ request, auth, response }: HttpContext) {
     const user = await auth.authenticate()
 
-    const payload = {
+    const validatedData = await categoryValidator.validate({
       label: request.input('label'),
+    })
+
+    const payload = {
+      label: validatedData.label,
       createdByUserId: user.id,
     }
 
@@ -52,8 +56,12 @@ export default class CategoriesController {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier cette category.' })
     }
 
+    const validatedData = await categoryValidator.validate({
+      label: request.input('label', category.label),
+    })
+
     category.merge({
-      label: request.input('firstname', category.label),
+      label: validatedData.label,
       createdByUserId: user.id,
     })
     await category.save()

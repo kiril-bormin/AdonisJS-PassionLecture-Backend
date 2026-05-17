@@ -1,6 +1,6 @@
 import Publisher from '#models/publisher'
 import type { HttpContext } from '@adonisjs/core/http'
-import { messages } from '@vinejs/vine/defaults'
+import { publisherValidator } from '#validators/publisher'
 
 export default class PublishersController {
   async index({ request }: HttpContext) {
@@ -35,8 +35,12 @@ export default class PublishersController {
   async store({ request, auth, response }: HttpContext) {
     const user = await auth.authenticate()
 
-    const payload = {
+    const validatedData = await publisherValidator.validate({
       name: request.input('name'),
+    })
+
+    const payload = {
+      name: validatedData.name,
       createdByUserId: user.id,
     }
 
@@ -52,8 +56,12 @@ export default class PublishersController {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier cet éduteur.' })
     }
 
-    publisher.merge({
+    const validatedData = await publisherValidator.validate({
       name: request.input('name', publisher.name),
+    })
+
+    publisher.merge({
+      name: validatedData.name,
       createdByUserId: user.id,
     })
     await publisher.save()

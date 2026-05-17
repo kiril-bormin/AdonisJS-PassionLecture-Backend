@@ -1,5 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import User from '#models/user'
+import { userUpdateValidator } from '#validators/user'
 
 export default class UsersController {
   async index({ request }: HttpContext) {
@@ -44,10 +45,12 @@ export default class UsersController {
       return response.forbidden({ message: "Vous n'êtes pas autorisé à modifier cet utilisateur." })
     }
 
-    user.merge({
+    const validatedData = await userUpdateValidator.validate({
       pseudo: request.input('pseudo', user.pseudo),
       email: request.input('email', user.email),
     })
+
+    user.merge(validatedData)
 
     await user.save()
     return user

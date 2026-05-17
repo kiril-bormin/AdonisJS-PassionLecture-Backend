@@ -1,6 +1,6 @@
 import Author from '#models/author'
 import type { HttpContext } from '@adonisjs/core/http'
-import { messages } from '@vinejs/vine/defaults'
+import { authorValidator } from '#validators/author'
 
 export default class AuthorsController {
   async index({ request }: HttpContext) {
@@ -35,9 +35,14 @@ export default class AuthorsController {
   async store({ request, auth, response }: HttpContext) {
     const user = await auth.authenticate()
 
-    const payload = {
+    const validatedData = await authorValidator.validate({
       firstname: request.input('firstname'),
       lastname: request.input('lastname'),
+    })
+
+    const payload = {
+      firstName: validatedData.firstname,
+      lastName: validatedData.lastname,
       createdByUserId: user.id,
     }
 
@@ -53,9 +58,14 @@ export default class AuthorsController {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier ce livre.' })
     }
 
+    const validatedData = await authorValidator.validate({
+      firstname: request.input('firstname', author.firstName),
+      lastname: request.input('lastname', author.lastName),
+    })
+
     author.merge({
-      firstName: request.input('firstname', author.firstName),
-      lastName: request.input('lastname', author.lastName),
+      firstName: validatedData.firstname,
+      lastName: validatedData.lastname,
       createdByUserId: user.id,
     })
     await author.save()

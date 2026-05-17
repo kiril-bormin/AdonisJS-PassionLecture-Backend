@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Review from '#models/review'
 import Book from '#models/book'
+import { reviewValidator } from '#validators/review'
 
 export default class ReviewsController {
   async index({ params, request }: HttpContext) {
@@ -24,9 +25,13 @@ export default class ReviewsController {
     const user = await auth.authenticate()
     await Book.findOrFail(params.id)
 
-    const payload = {
+    const validatedData = await reviewValidator.validate({
       rating: request.input('rating'),
       comment: request.input('comment'),
+    })
+
+    const payload = {
+      ...validatedData,
       bookId: params.id,
       userId: user.id,
     }
@@ -43,10 +48,12 @@ export default class ReviewsController {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier cet avis.' })
     }
 
-    review.merge({
+    const validatedData = await reviewValidator.validate({
       rating: request.input('rating', review.rating),
       comment: request.input('comment', review.comment),
     })
+
+    review.merge(validatedData)
 
     await review.save()
     return review
