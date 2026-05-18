@@ -27,5 +27,14 @@ export default await Env.create(new URL('../', import.meta.url), {
   DB_PORT: Env.schema.number(),
   DB_USER: Env.schema.string(),
   DB_PASSWORD: Env.schema.string.optional(),
-  DB_DATABASE: Env.schema.string()
+  DB_DATABASE: Env.schema.string(),
+
+  /*
+  |----------------------------------------------------------
+  | Variables pour la sécurité des mots de passe
+  |----------------------------------------------------------
+  */
+  // Poivre (pepper) ajouté au mdp avant le hashage bcrypt.
+  // Doit être une chaîne longue et aléatoire, stockée uniquement côté serveur.
+  HASH_PEPPER: Env.schema.string(),
 })
