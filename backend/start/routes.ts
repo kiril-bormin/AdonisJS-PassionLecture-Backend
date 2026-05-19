@@ -53,9 +53,10 @@ router.delete('/books/:id', [BooksController, 'destroy']).use(middleware.auth())
 
 // Review routes
 router.get('/books/:id/reviews', [ReviewsController, 'index'])
+router.get('/books/:id/reviews/:reviewId', [ReviewsController, 'show'])
 router.post('/books/:id/reviews', [ReviewsController, 'store']).use(middleware.auth())
-router.put('/reviews/:id', [ReviewsController, 'update']).use(middleware.auth())
-router.delete('/reviews/:id', [ReviewsController, 'destroy']).use(middleware.auth())
+router.put('/books/:id/reviews/:reviewId', [ReviewsController, 'update']).use(middleware.auth())
+router.delete('/books/:id/reviews/:reviewId', [ReviewsController, 'destroy']).use(middleware.auth())
 
 // Users routes
 router.get('/users', [UsersController, 'index']).use([middleware.auth(), middleware.admin()])

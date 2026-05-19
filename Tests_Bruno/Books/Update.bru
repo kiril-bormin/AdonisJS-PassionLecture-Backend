@@ -5,7 +5,9 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/books/1
+  url: http://localhost:3333/books/31
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,8 +15,11 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "title": "Voyage au centre de la Terre (updated)",
-  "pages": 245
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"title": "Voyage au centre de la Lune (updated)",
+  "pages": 245}
+}

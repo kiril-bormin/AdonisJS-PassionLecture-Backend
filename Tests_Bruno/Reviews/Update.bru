@@ -1,11 +1,13 @@
 meta {
   name: Reviews_Update
   type: http
-  seq: 62
+  seq: 4
 }
 
 put {
-  url: http://localhost:3333/reviews/1
+  url: http://localhost:3333/books/1/reviews/1
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,8 +15,11 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "rating": 4,
-  "comment": "Après relecture, note ajustée."
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"rating": 4,
+  "comment": "Après relecture, note ajustée."}
+}

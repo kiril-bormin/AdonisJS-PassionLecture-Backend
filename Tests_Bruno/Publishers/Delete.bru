@@ -5,10 +5,15 @@ meta {
 }
 
 delete {
-  url: http://localhost:3333/publishers/1
+  url: http://localhost:3333/publishers/6
+  body: none
+  auth: bearer
 }
 
 headers {
   Authorization: Bearer YOUR_ADMIN_TOKEN
 }
 
+auth:bearer {
+  token: {{api_token}}
+}

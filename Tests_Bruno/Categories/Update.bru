@@ -5,7 +5,9 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/categories/1
+  url: http://localhost:3333/categories/6
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,7 +15,10 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "name": "Science-fiction (updated)"
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"label": "Science-fiction (updated)"}
+}

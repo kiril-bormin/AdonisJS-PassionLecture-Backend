@@ -7,11 +7,15 @@ meta {
 post {
   url: http://localhost:3333/auth/register
   body: json
-  auth: none
+  auth: bearer
 }
 
 headers {
   Content-Type: application/json
+}
+
+auth:bearer {
+  token: {{api_token}}
 }
 
 body:json {
@@ -19,5 +23,14 @@ body:json {
   "username": "bruno_user",
   "email": "bruno_user@example.com",
   "password": "Password123!"
+  }
+}
+
+script:post-response {
+  const data = res.getBody();
+  
+  // On descend d'un niveau pour ne prendre QUE la chaîne de caractères
+  if (data.token && data.token.token) {
+    bru.setVar("api_token", data.token.token);
   }
 }

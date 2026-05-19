@@ -5,7 +5,9 @@ meta {
 }
 
 put {
-  url: http://localhost:3333/publishers/1
+  url: http://localhost:3333/publishers/6
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,7 +15,10 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "name": "Gallimard (updated)"
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"name": "Gallimard (updated)"}
+}

@@ -20,7 +20,15 @@ export default class ReviewsController {
 
     return query
   }
+  async show({ params }: HttpContext) {
+    const review = await Review.query()
+      .where('id', params.reviewId)
+      .where('bookId', params.id)
+      .preload('user', (userQuery) => userQuery.select(['id', 'pseudo']))
+      .firstOrFail()
 
+    return review
+  }
   async store({ params, auth, request, response }: HttpContext) {
     const user = await auth.authenticate()
     await Book.findOrFail(params.id)
@@ -42,7 +50,10 @@ export default class ReviewsController {
 
   async update({ params, auth, request, response }: HttpContext) {
     const user = await auth.authenticate()
-    const review = await Review.findOrFail(params.id)
+    const review = await Review.query()
+      .where('id', params.reviewId)
+      .where('bookId', params.id)
+      .firstOrFail()
 
     if (review.userId !== user.id && user.role !== 'admin') {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à modifier cet avis.' })
@@ -61,7 +72,10 @@ export default class ReviewsController {
 
   async destroy({ params, auth, response }: HttpContext) {
     const user = await auth.authenticate()
-    const review = await Review.findOrFail(params.id)
+    const review = await Review.query()
+      .where('id', params.reviewId)
+      .where('bookId', params.id)
+      .firstOrFail()
 
     if (review.userId !== user.id && user.role !== 'admin') {
       return response.forbidden({ message: 'Vous n`êtes pas autorisé à supprimer cet avis.' })

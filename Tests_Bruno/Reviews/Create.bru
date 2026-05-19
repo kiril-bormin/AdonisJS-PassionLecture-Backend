@@ -1,11 +1,13 @@
 meta {
   name: Reviews_Create
   type: http
-  seq: 61
+  seq: 3
 }
 
 post {
   url: http://localhost:3333/books/1/reviews
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,8 +15,11 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "rating": 5,
-  "comment": "Excellent ouvrage, très inspirant."
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"rating": 5,
+  "comment": "Excellent ouvrage, très inspirant."}
+}

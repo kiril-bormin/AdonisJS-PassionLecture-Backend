@@ -6,6 +6,8 @@ meta {
 
 post {
   url: http://localhost:3333/publishers
+  body: json
+  auth: bearer
 }
 
 headers {
@@ -13,7 +15,10 @@ headers {
   Content-Type: application/json
 }
 
-body:json {
-  "name": "Gallimard"
+auth:bearer {
+  token: {{api_token}}
 }
 
+body:json {
+  {"name": "Gallimard"}
+}
