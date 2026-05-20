@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import User from '#models/user'
+import User, { UserRole } from '#models/user'
 import { loginValidator, registerValidator } from '#validators/auth'
 
 export default class AuthController {
@@ -12,13 +12,22 @@ export default class AuthController {
       password: request.input('password'),
     })
 
-    const user = await User.create({
-      // créer le nouveau user
-      pseudo: validatedData.pseudo,
-      email: validatedData.email,
-      password: validatedData.password,
-      role: 'user',
-    })
+    let user
+    try {
+      user = await User.create({
+        // créer le nouveau user
+        pseudo: validatedData.pseudo,
+        email: validatedData.email,
+        password: validatedData.password,
+        role: UserRole.USER,
+      })
+    } catch (error) {
+      if (error && typeof error === 'object' && 'code' in error && error.code === 'ER_DUP_ENTRY') {
+        return response.conflict({ message: 'Email déjà utilisé.' })
+      }
+
+      throw error
+    }
 
     const token = await auth.use('api').createToken(user) //
 

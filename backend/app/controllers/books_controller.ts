@@ -3,7 +3,7 @@ import Book from '#models/book'
 import { bookValidator } from '#validators/book'
 
 export default class BooksController {
-  async index({ request }: HttpContext) {
+  async index({ request, response }: HttpContext) {
     // récupèrer les filtres de recherche
     const q = request.input('q') // q => pour querry, se trouve dans l'url ex: GET /books?q=aventure
     const categoryId = request.input('categoryId')
@@ -39,15 +39,17 @@ export default class BooksController {
     }
 
     if (page) {
-      return query.paginate(page, limit) // .paginate calcul automatiquement les sauts en fonction de limit
+      const results = await query.paginate(page, limit) // .paginate calcul automatiquement les sauts en fonction de limit
+      return response.ok(results)
     }
 
-    return query
+    const results = await query
+    return response.ok(results)
   }
 
-  async show({ params }: HttpContext) {
+  async show({ params, response }: HttpContext) {
     // détails d'un livre spécifique
-    return Book.query()
+    const book = await Book.query()
       .where('id', params.id)
       .preload('author')
       .preload('category')
@@ -55,6 +57,7 @@ export default class BooksController {
       .preload('user')
       .preload('reviews')
       .firstOrFail() // récupère le premier id (vue qu'il est unique)l
+    return response.ok(book)
   }
 
   async store({ auth, request, response }: HttpContext) {
@@ -116,7 +119,7 @@ export default class BooksController {
     })
 
     await book.save()
-    return book
+    return response.ok(book)
   }
 
   async destroy({ auth, params, response }: HttpContext) {
