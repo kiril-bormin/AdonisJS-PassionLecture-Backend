@@ -86,7 +86,7 @@ export default class BooksController {
     }
 
     const book = await Book.create(payload) // création du livre dans la db
-    response.created(book) // envoyer la réponse 201 (Created) avec l'objet créé
+    return response.created(book) // envoyer la réponse 201 (Created) avec l'objet créé
   }
 
   async update({ auth, params, request, response }: HttpContext) {
@@ -119,7 +119,7 @@ export default class BooksController {
     })
 
     await book.save()
-    return response.ok(book)
+    return response.ok(book) // envoyer la réponse 200 (OK)
   }
 
   async destroy({ auth, params, response }: HttpContext) {

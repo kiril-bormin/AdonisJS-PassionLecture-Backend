@@ -29,7 +29,7 @@ export default class AuthController {
       throw error
     }
 
-    const token = await auth.use('api').createToken(user) //
+    const token = await auth.use('api').createToken(user)
 
     return response.created({
       user,
