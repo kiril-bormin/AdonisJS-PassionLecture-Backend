@@ -13,6 +13,11 @@ import Category from './category.js'
 import Publisher from './publisher.js'
 import env from '#start/env'
 
+export enum UserRole {
+  USER = 'user',
+  ADMIN = 'admin',
+}
+
 /**
  * Factory qui retourne un hasher bcrypt enrichi du poivre (pepper).
  *
@@ -71,7 +76,7 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare password: string
 
   @column()
-  declare role: 'user' | 'admin'
+  declare role: UserRole
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

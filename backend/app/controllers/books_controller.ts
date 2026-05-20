@@ -73,7 +73,7 @@ export default class BooksController {
       extractUrl,
       coverUrl: request.input('coverUrl'),
     })
-// dans payload on récupère les données du body (ainsi que les 3 variables qu'on a crée plus haut)
+    // dans payload on récupère les données du body (ainsi que les 3 variables qu'on a crée plus haut)
     const payload = {
       ...validatedData,
       categoryId: request.input('categoryId'),
@@ -100,7 +100,7 @@ export default class BooksController {
     const extractUrl = request.input('extractUrl', request.input('excerptUrl'))
 
     const validatedData = await bookValidator.validate({
-      title: request.input('title', book.title),// deuxième valeur est la valeur par défaut
+      title: request.input('title', book.title), // deuxième valeur est la valeur par défaut
       summary: request.input('summary', book.summary),
       pagesCount: pagesCount ?? book.pagesCount,
       editionYear: editionYear ?? book.editionYear,

@@ -6,7 +6,8 @@
 | The routes file is used for defining the HTTP routes.
 |
 */
-
+import AutoSwagger from 'adonis-autoswagger'
+import swagger from '#config/swagger'
 import router from '@adonisjs/core/services/router'
 import { middleware } from '#start/kernel'
 import BooksController from '#controllers/books_controller'
@@ -69,3 +70,19 @@ router
 router
   .put('/users/:id/role', [UsersController, 'updateRole'])
   .use([middleware.auth(), middleware.admin()])
+
+router
+  .group(() => {
+    router.post('register', [AuthController, 'register'])
+    router.post('login', [AuthController, 'login'])
+    router.post('logout', [AuthController, 'logout']).use(middleware.auth())
+  })
+  .prefix('api/user')
+// returns swagger in YAML
+router.get('swagger', async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger)
+})
+// Renders Swagger-UI and passes YAML-output of /swagger
+router.get('docs', async () => {
+  return AutoSwagger.default.ui('/swagger', swagger)
+})
